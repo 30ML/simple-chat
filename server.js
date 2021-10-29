@@ -1,9 +1,17 @@
-const io = require('socket.io')
-const http = require('http')
+const Discord = require('discord.js');
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
 
-const users = {}
-const rooms = {}
+const client = new Discord.Client({intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES]});
 
-const server = http.createServer(() => {})
+client.once('ready', () => {
+  console.log('Bot is ready!');
+});
 
-io(server.listen(80))
+client.on('messageCreate', message => {
+  if (message.content.toLowerCase() === '!ping') {
+    message.reply('Pong!');
+  }
+});
+
+client.login(process.env.BOT_TOKEN);
